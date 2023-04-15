@@ -2,6 +2,7 @@ import { menuArray } from './data.js'
 
 let orderArr = []
 let userDetails = {}
+let rate = 0
 let isActive = true
 
 document.addEventListener('click', (e) => {
@@ -40,24 +41,29 @@ document.addEventListener('click', (e) => {
 			qtyBtns('decrement', e.target.dataset.decrement)
 		}
 	} else if (e.target.id === 'pay-btn') {
-		document.querySelectorAll('.form-input').forEach((inp) => {
+		let isEmpty = true
+		document.querySelectorAll('.form-input').forEach((inp, i) => {
 			if (inp.value === '') {
-				return
-			} else {
-				setTimeout(() => {
-					document.querySelector('#rating').classList.add('showrating')
-					document.querySelector('.star-rating').classList.add('show')
-				}, 3000)
+				isEmpty = false
 			}
 		})
+		if (isEmpty) {
+			setTimeout(() => {
+				document.querySelector('#rating').classList.add('showrating')
+				document.querySelector('.star-rating').classList.add('show')
+			}, 1500)
+		}
 	} else if (e.target.id === 'rate-btn') {
+		if (rate === 0) {
+			return
+		}
 		document.querySelector('.star-rating').classList.remove('show')
 		document.querySelector('.thankyou').classList.add('show')
 		setTimeout(() => {
 			document.querySelector('#rating').classList.remove('showrating')
 			document.querySelector('.thankyou').classList.remove('show')
 			document.querySelector('#reload').style.display = 'block'
-		}, 3000)
+		}, 1500)
 	}
 })
 
@@ -65,6 +71,7 @@ const ratings = () => {
 	const stars = document.querySelectorAll('.fa-star')
 	stars.forEach((star, i1) => {
 		star.addEventListener('click', () => {
+			rate = star.dataset.value
 			stars.forEach((star, i2) => {
 				i1 >= i2 ? star.classList.add('rate') : star.classList.remove('rate')
 			})
