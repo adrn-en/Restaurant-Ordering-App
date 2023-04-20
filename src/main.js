@@ -81,16 +81,13 @@ const ratings = () => {
 ratings()
 
 const qtyBtns = (btnType, productId) => {
+	const quantity = menuArray.filter((product) => {
+		return product.id === Number(productId)
+	})[0]
 	if (btnType === 'increment') {
-		const quantity = menuArray.filter((product) => {
-			return product.id === Number(productId)
-		})[0]
 		quantity.qty++
 		render()
 	} else if (btnType === 'decrement') {
-		const quantity = menuArray.filter((product) => {
-			return product.id === Number(productId)
-		})[0]
 		quantity.qty--
 		render()
 	}
